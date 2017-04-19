@@ -1,0 +1,94 @@
+#App{
+    padding:40px 0;
+}
+h2{
+    padding-left:8px;
+    padding-bottom:10px;
+    margin-bottom:0;
+    border-bottom:1px solid #e3e8ee;
+}
+.container{
+    width:960px;
+    margin:0 auto;
+    overflow: hidden;
+}
+.leftBox{
+    float:left;
+    width:560px;
+}
+.outerCon{
+    padding-top:20px;
+    padding-left:580px;
+}
+.rightBox{
+    height:400px;
+}
+
+@media screen and (min-width:1400px){
+    .container{
+        width:1200px;
+    }
+    .leftBox{
+        width:710px;
+    }
+    .outerCon{
+        padding-left:730px;
+    }
+}
+
+/* newsList style*/
+.newsList{
+    padding:0 10px;
+}
+.newsList a{
+    color:inherit;
+}
+.newsList .item{
+    position: relative;
+    width:100%;
+    padding:8px 0;
+    overflow: hidden;
+    border-bottom:1px solid #e3e8ee;
+    -webkit-transition: border-color 0.3s;
+    -moz-transition: border-color 0.3s;
+    -ms-transition: border-color 0.3s;
+    -o-transition: border-color 0.3s;
+    transition: border-color 0.3s;
+}
+.newsList .item:hover{
+    border-color:#cdd3da;
+}
+.newsList .infoBox{
+    width:70%;
+}
+.newsList .infoBox .title{
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.newsList .item .intro{
+    margin-top:5px;
+    font-size:12px;
+}
+.newsList .item .image{
+    width:120px;
+    height:80px;
+}
+.newsList .item .image img{
+    border-radius: 3px;
+}
+
+.newsList .item .bottomBox{
+    position: absolute;
+    font-size:12px;
+    bottom:6px;
+}
+.newsList .item .source{
+    color:#657180;
+}
+.newsList .item .time{
+    margin-top:2px;
+    margin-left:20px;
+    color:#9ea7b4;
+}

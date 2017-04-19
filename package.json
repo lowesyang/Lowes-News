@@ -1,0 +1,59 @@
+{
+  "name": "vue-express-hotload-template",
+  "version": "1.0.0",
+  "description": "Vue+express server-render full-stack autoreload 全栈自动刷新开发模板",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=dev supervisor -w server.js,src/server server.js",
+    "build": "webpack -p --config config/webpack.prod.config.js & cross-env NODE_ENV=production node server.js"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "axios": "^0.16.1",
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "cross-env": "^4.0.0",
+    "css-loader": "^0.28.0",
+    "es6-promise": "^4.1.0",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "html-webpack-plugin": "^2.28.0",
+    "path": "^0.12.7",
+    "reload": "^1.1.1",
+    "style-loader": "^0.16.1",
+    "sweet-modal-vue": "^1.1.0",
+    "url-loader": "^0.5.8",
+    "v-tooltip": "^1.1.6",
+    "vue": "^2.2.6",
+    "vue-js-modal": "^1.0.17",
+    "vue-lazy-images": "^1.1.10",
+    "vue-loader": "^11.3.4",
+    "vue-spinner": "^1.0.2",
+    "vue-template-compiler": "^2.2.6",
+    "vue-toasted": "^1.0.27",
+    "webpack": "^2.3.2",
+    "webpack-dev-middleware": "^1.10.1",
+    "webpack-dev-server": "^2.4.2",
+    "webpack-hot-middleware": "^2.18.0",
+    "webpack-merge": "^4.1.0"
+  },
+  "author": "LowesYang",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "crypto": "^0.0.3",
+    "express": "^4.15.2",
+    "jwt-simple": "^0.5.1",
+    "lru-cache": "^4.0.2",
+    "moment": "^2.18.1",
+    "mongodb": "^2.2.25",
+    "mongoose": "^4.9.4",
+    "segment": "^0.1.3",
+    "vue-server-renderer": "^2.2.6"
+  }
+}
