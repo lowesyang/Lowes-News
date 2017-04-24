@@ -44,8 +44,8 @@ router.get("/news/:type?",(req,res)=>{
  */
 router.get("/extra/news/:type?",(req,res)=>{
     let type=req.params.type || "";
-    let page=req.query.p;
-    let pcount=req.query.pcount;
+    let page=parseInt(req.query.p);
+    let pcount=parseInt(req.query.pcount);
     getNews(type,page,pcount,false)
         .then((news)=>{
             res.json({
