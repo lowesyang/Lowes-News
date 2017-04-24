@@ -225,7 +225,7 @@
         },
         methods:{
             loadRecom(num = 20){
-                if(this.isLoading) return;
+                if(this.isLoading || !this.isLogin) return;
                 this.isLoading=true;
                 let type=location.pathname.split('/')[2]||"";
                 axios.get("/recom/list/"+type+"?num="+num).then((response)=>{
