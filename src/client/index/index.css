@@ -70,6 +70,9 @@
 .newsList .item .intro{
     margin-top:5px;
     font-size:12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .newsList .item .image{
     width:120px;
