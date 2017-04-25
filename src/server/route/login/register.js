@@ -36,7 +36,6 @@ router.post("/register",(req,res,next)=>{
                 body:{
                     userId:user._id,
                     username:user.username,
-                    favor:user.favor
                 }
             })
         })
