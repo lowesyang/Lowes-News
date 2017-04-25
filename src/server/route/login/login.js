@@ -34,8 +34,7 @@ router.post("/login",(req,res)=>{
                 token:token,
                 body:{
                     userId:data._id,
-                    username:data.username,
-                    favor:data.favor
+                    username:data.username
                 }
             })
         }
