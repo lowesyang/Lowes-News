@@ -39,17 +39,23 @@ article{
     }
 }
 .article .title{
-    font-size:24px;
+    font-size:28px;
+    font-weight:bold;
 }
 .article .infoBox{
-    margin:5px 0 10px 0;
+    margin:6px 0 10px 0;
     font-size:14px;
+    border-bottom:1px solid #e3e8ee;
+    padding-bottom:12px;
 }
 .article .infoBox .source{
     margin-right:20px;
 }
 .article .infoBox .time{
     color:#657180;
+}
+.article .content{
+    margin-top:10px;
 }
 .article .content img{
     width:50%;

@@ -24,7 +24,7 @@
         padding:10px;
     }
     h4{
-        color:#657180;
+        color:#666870;
         border-bottom:1px solid #e3e8ee;
         padding-bottom:10px;
         margin:0;
@@ -169,6 +169,7 @@
         display: block;
         padding:10px 0;
         border-bottom: 1px solid #e3e8ee;
+        letter-spacing:0.5px;
         -webkit-transition: border-color 0.3s;
         -moz-transition: border-color 0.3s;
         -ms-transition: border-color 0.3s;
@@ -182,7 +183,7 @@
         padding:0 10px;
     }
     .item .title{
-        color:#657180;
+        color:#666870;
         font-size:14px;
         font-weight: 600;
     }

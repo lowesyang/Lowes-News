@@ -20,7 +20,7 @@
 <style scoped>
     .header{
         position: fixed;
-        background-color: #464c5b;
+        background-color: #333438;
         width:100%;
         height:50px;
         z-index:10;

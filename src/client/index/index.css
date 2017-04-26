@@ -66,6 +66,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    letter-spacing:0.5px;
 }
 .newsList .item .intro{
     margin-top:5px;
@@ -73,6 +74,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    letter-spacing:0.5px;
 }
 .newsList .item .image{
     width:120px;
