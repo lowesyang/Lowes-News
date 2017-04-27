@@ -21,10 +21,11 @@
                     </Button>
                 </form>
             </modal>
-            <modal name="registerModal" width="400" height="280">
+            <modal name="registerModal" width="400" height="340">
                 <h2>注册</h2>
                 <form class="userForm">
                     <Input type="text" v-model="registerForm.username" placeholder="用户名" />
+                    <Input type="text" v-model="registerForm.email" placeholder="电子邮箱" />
                     <Input type="password" v-model="registerForm.password" placeholder="密码" />
                     <Input type="password" v-model="registerForm.confirm" placeholder="确认密码" />
                     <Button type="submit" @click.stop.prevent="register">
@@ -102,7 +103,8 @@
                 registerForm:{
                     username:"",
                     password:"",
-                    confirm:""
+                    confirm:"",
+                    email:""
                 },
                 postCD:5,        //发请求冷却时间
                 setTm:null,      //setTimeout句柄
@@ -148,7 +150,8 @@
                 axios.post('/register',{
                     username:this.registerForm.username,
                     password:this.registerForm.password,
-                    confirm:this.registerForm.confirm
+                    confirm:this.registerForm.confirm,
+                    email:this.registerForm.email
                 }).then((response)=>{
                     let res=response.data;
                     if(!res.code){
@@ -170,6 +173,10 @@
                 }
                 if(form.password && form.password.length<6){
                     this.$toasted.error("密码长度须大于6位!");
+                    return false;
+                }
+                if(form.email && !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-])+/.test(form.email)){
+                    this.$toasted.error("电子邮箱格式不正确");
                     return false;
                 }
                 return true;

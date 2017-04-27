@@ -11,6 +11,10 @@ let userSchema=new Schema({
         type:String,
         required:true
     },
+    email:{
+        type:String,
+        required:true
+    },
     /**
      *  记录偏好
      *  @property count: 阅读新闻的总次数

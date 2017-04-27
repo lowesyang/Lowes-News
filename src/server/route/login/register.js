@@ -13,8 +13,15 @@ router.post("/register",(req,res,next)=>{
     }
     let info={
         username:req.body.username,
+        email:req.body.email,
         password:encrypt.encrypt(req.body.password)
     };
+    if(!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-])+/.test(info.email)){
+        return res.json({
+            code:-1,
+            msg:'电子邮箱格式不正确!'
+        })
+    }
     let user=new userModel(info);
     userModel.findOne({username:info.username}).exec((err,data)=>{
         if(err) return next(err);
