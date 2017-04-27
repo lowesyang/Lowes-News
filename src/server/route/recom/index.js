@@ -28,7 +28,7 @@ router.get("/list/:type?",(req,res)=>{
     let type=req.params.type || "";
     let recomNum=req.query.num || 20;
     let userInfo=req.user;
-    let taste=userInfo.favor.taste;
+    let taste=userInfo.favor.taste || {};
     let resArr=cache.get(req.user._id);
     // console.log(resArr)
     if(!resArr) {
