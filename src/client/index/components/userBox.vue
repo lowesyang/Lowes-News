@@ -44,14 +44,14 @@
         text-align: center;
         margin-top:5px;
         padding:20px 0;
-        border-top:2px solid #464c5b;
+        border-top:2px solid #333438;
         background-color: #f4f5f6;
-        color:#657180
+        color:#666870
     }
     h2{
         padding:10px 20px;
         margin:0;
-        background-color: #464c5b;
+        background-color: #333438;
         color:#f5f7f9;
     }
     .userBox a{

@@ -13,7 +13,7 @@
         height:30px;
         border:0;
         cursor:pointer;
-        background-color: #464c5b;
+        background-color: #333438;
         color:#f5f7f9;
         border-radius:2px;
         -webkit-transition: background-color 0.3s;
@@ -23,7 +23,7 @@
         transition: background-color 0.3s;
     }
     button:hover{
-        background-color: #657180;
+        background-color: #4c4e54;
     }
 </style>
 

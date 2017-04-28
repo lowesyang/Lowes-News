@@ -19,7 +19,7 @@
     h3{
         margin:0;
         margin-bottom:15px;
-        color:#464c5b;
+        color:#666870;
     }
     a{
         display: inline-block;
