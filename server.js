@@ -13,7 +13,7 @@ let news=require(path.resolve(__dirname,ROUTEPATH,"news"));
 let login=require(path.resolve(__dirname,ROUTEPATH,"login"));
 let recom=require(path.resolve(__dirname,ROUTEPATH,"recom"));
 
-let runCmd=require("./autoDeploy/deploy").runCmd;
+let runCmd=require("./autoDeploy/runCmd").runCmd;
 
 // let sinaNews=require("./src/server/model/sinaNews");
 // let type="tec"
