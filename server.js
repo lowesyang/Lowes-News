@@ -3,7 +3,7 @@ let path=require("path");
 let fs=require("fs");
 let bodyParser=require("body-parser");
 
-let isDev=process.env.NODE_ENV !== "production";
+let isDev=process.env.NODE_ENV === "dev";
 let app=express();
 let port=3000;
 

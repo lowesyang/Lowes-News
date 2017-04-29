@@ -1,6 +1,6 @@
 let fs=require("fs");
 let path=require("path");
-let isDev = process.env.NODE_ENV !== "production";
+let isDev = process.env.NODE_ENV === "dev";
 
 // add reload.js in template for auto-reloading
 function devHtmlFilter(html){
