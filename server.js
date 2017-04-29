@@ -40,6 +40,8 @@ let recom=require(path.resolve(__dirname,ROUTEPATH,"recom"));
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+app.use(express.static("src"));
+
 
 if(isDev) {
     let webpack = require("webpack");

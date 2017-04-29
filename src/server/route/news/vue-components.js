@@ -14,7 +14,7 @@ let newsList=(newsList)=>{
         "<div class='time fl'>{{item.ptime || item.cdateTime || item.time}}</div>" +
         "</div>" +
         "</div>"+
-        "<lazy-image class='image fr' :src='item.imgsrc || item.img'></lazy-image>"+
+        "<lazy-image class='image fr' :src='item.imgsrc || item.img || \"/images/noimg.jpg\"'></lazy-image>"+
         "</div>" +
         "</a>" +
         "</div>",

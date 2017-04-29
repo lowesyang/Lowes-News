@@ -38,7 +38,7 @@ router.get("/list/:type?",(req,res)=>{
             colForUser.push(taste[word]);
         }
 
-        getNews(type, 1, 50,true).then((news) => {
+        getNews(type, 1, 70,true).then((news) => {
             let resArr = [],pearson;
             // 计算每个新闻与用户的皮尔斯相似度
             news.forEach((item) => {
