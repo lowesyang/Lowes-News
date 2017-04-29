@@ -53,32 +53,38 @@ URL=[
         "key":"BAI6I0O5wangning"
     }
 ]
-for k in range(0,len(URL)):
-    try:
-        data=get_page_decode(URL[k]['url'])
-    except Exception as err:
-        print(err)
-        continue
-    json_str=data[9:-1]
-    items=json.loads(json_str)[URL[k]['key']]
-    for news in items:
-        news['category']=URL[k]["category"]
-        # 获取详情页
-        try:
-            if url_reg.search(news['url']):
-                detail=get_page_decode(news['url'])
-            else:
-                continue
-            content=etree.HTML(detail).xpath("//div[@class='content']")[0]
-        except Exception as err:
-            print(err)
-            continue
-        # 此处不能用tostring，否则会有乱码，mongodb将当成binary来处理
-        content=etree.tounicode(content)    
-        news['content']=content
-        # 查询是否已存在该条新闻
-        save_item=db.netease_news.find_one({'docid':news['docid']})
-        if save_item is None:
-            db.netease_news.insert(news)
-    print("已爬完"+URL[k]['category'])
 
+def netease():
+    print("开始爬取网易新闻")
+    for k in range(0,len(URL)):
+        try:
+            data=get_page_decode(URL[k]['url'])
+        except Exception as err:
+            # print(err)
+            continue
+        json_str=data[9:-1]
+        items=json.loads(json_str)[URL[k]['key']]
+        for news in items:
+            news['category']=URL[k]["category"]
+            # 获取详情页
+            try:
+                if url_reg.search(news['url']):
+                    detail=get_page_decode(news['url'])
+                else:
+                    continue
+                content=etree.HTML(detail).xpath("//div[@class='content']")[0]
+            except Exception as err:
+                # print(err)
+                continue
+            # 此处不能用tostring，否则会有乱码，mongodb将当成binary来处理
+            content=etree.tounicode(content)    
+            news['content']=content
+            # 查询是否已存在该条新闻
+            save_item=db.netease_news.find_one({'docid':news['docid']})
+            if save_item is None:
+                db.netease_news.insert(news)
+        # print("已爬完"+URL[k]['category'])
+    print("netease completed!")
+
+if __name__=='__main__':
+    netease()

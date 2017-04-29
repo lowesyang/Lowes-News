@@ -13,6 +13,8 @@ let news=require(path.resolve(__dirname,ROUTEPATH,"news"));
 let login=require(path.resolve(__dirname,ROUTEPATH,"login"));
 let recom=require(path.resolve(__dirname,ROUTEPATH,"recom"));
 
+let runCmd=require("./autoDeploy/deploy");
+
 // let sinaNews=require("./src/server/model/sinaNews");
 // let type="tec"
 // sinaNews.findOne({category:{$regex:type}}).then((data)=>{
@@ -77,6 +79,13 @@ else{
             return console.log(err);
         }
     })
+
+    //每隔半小时运行一次爬虫
+    setInterval(()=>{
+        runCmd('python',['news_spider/main.py'],()=>{
+            console.log('Spider ran completed!')
+        })
+    },3600*1000);
 }
 app.use("/",[news,login.login,login.register]);
 app.use(login.loginCheck);

@@ -60,7 +60,7 @@ def getGameNews():
                     if cont is not None:
                         news["content"]+=etree.tounicode(cont)
             except Exception as err:
-                print(str(err)+" skip game news")
+                # print(str(err)+" skip game news")
                 continue
             # 生成uuid
             news["docID"]=uuid.uuid3(uuid.NAMESPACE_DNS,news["content"])
@@ -68,4 +68,5 @@ def getGameNews():
             save_item=db.sina_news.find_one({"docID":news["docID"]})
             if save_item is None:
                 db.sina_news.insert(news)
-        print("已爬完"+str(game["scate"]))
+        # print("已爬完"+str(game["scate"]))
+    print("新浪游戏新闻 completed!")

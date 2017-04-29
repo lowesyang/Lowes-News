@@ -2,7 +2,7 @@ let http=require("http");
 let createHandler=require("github-webhook-handler");
 let handler=createHandler({path:'/',secret:'lowesyang'});
 
-function run_cmd(cmd,args,callback){
+function runCmd(cmd,args,callback){
     let spawn=require("child_process").spawn;
     let child=spawn(cmd,args);
     let resp="";
@@ -21,7 +21,7 @@ handler.on('err',(err)=>{
 
 handler.on('push',(ev)=>{
     console.log("Received a push event for %s",ev.payload.repository.name);
-    run_cmd('sh',['./autoDeploy.sh'],()=>{
+    runCmd('sh',['autoDeploy.sh'],()=>{
         console.log('run sh completed!');
     })
 });
@@ -32,3 +32,7 @@ http.createServer((req,res)=>{
         res.end('no such location');
     })
 }).listen(18089);
+
+module.exports={
+    runCmd
+}

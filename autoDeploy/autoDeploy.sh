@@ -1,9 +1,5 @@
 #!/bin/sh
 
-unset GIT_DIR
-FrontPath=/yjdata/www/thinkphp/chinaipo/frontend
-BackPath=/yjdata/www/thinkphp/chinaipo/backend
-
 echo "======================"
 echo "Start deployment"
 echo "pulling source code..."

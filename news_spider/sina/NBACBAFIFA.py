@@ -52,10 +52,11 @@ def getNBACBAFIFA():
                         if art is not None:
                             news["content"]+=etree.tounicode(art)
             except Exception as err:
-                print(str(err)+" skip "+str(cate["scate"])+" news")
+                # print(str(err)+" skip "+str(cate["scate"])+" news")
                 continue
             # 查询是否已存在该条新闻
             save_item=db.sina_news.find_one({"news_id":news["news_id"]})
             if save_item is None:
                 db.sina_news.insert(news)
-        print("已爬完"+str(cate["scate"]))
+        # print("已爬完"+str(cate["scate"]))
+    print("NBA、CBA、国际足球新闻 completed!")
