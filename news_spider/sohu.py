@@ -45,7 +45,7 @@ CATEGORY=[
 ]
 
 def sohu():
-    print("开始爬取搜狐新闻")
+    print("Begin to get sohu news")
     for k in range(0,len(CATEGORY)):
         for page in range(1,20):
             data=get_page("http://m.sohu.com/cr/"+str(CATEGORY[k]['cate'])+"/?page="+str(page)+"&v=2")

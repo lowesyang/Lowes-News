@@ -28,7 +28,7 @@ GAMES=[
 ]
 
 def getGameNews():
-    print("开始爬取新浪游戏新闻")
+    print("Begin to get sina games")
     for game in GAMES:
         data=get_page_decode(game["link"])
         data=etree.HTML(json.loads(data[9:-1])["result"]["data"])
@@ -69,4 +69,4 @@ def getGameNews():
             if save_item is None:
                 db.sina_news.insert(news)
         # print("已爬完"+str(game["scate"]))
-    print("新浪游戏新闻 completed!")
+    print("Sina game completed!")

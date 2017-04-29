@@ -29,7 +29,7 @@ SPORTEXTRA=[
 ]
 
 def getNBACBAFIFA():
-    print("开始爬取NBA、CBA、国际足球新闻")
+    print("Begin to get sina NBA,CBA,FIFA")
     for cate in SPORTEXTRA:
         data=get_page_decode(cate["link"])
         items=json.loads(data)["result"]["data"]["list"]
@@ -59,4 +59,4 @@ def getNBACBAFIFA():
             if save_item is None:
                 db.sina_news.insert(news)
         # print("已爬完"+str(cate["scate"]))
-    print("NBA、CBA、国际足球新闻 completed!")
+    print("Sina NBA,CBA,FIFA completed!")

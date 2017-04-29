@@ -39,7 +39,7 @@ MAINTHEME=[
 ]
 
 def getBasicNews():
-    print("开始爬取新浪主流板块新闻")
+    print("Begin to get sina basic")
     for cate in MAINTHEME:
         for page in range(1,10):
             data=get_page_decode("https://interface.sina.cn/ent/feed.d.json?ch="+cate["ch"]+"&page="+str(page))
@@ -76,4 +76,4 @@ def getBasicNews():
                 if save_item is None:
                     db.sina_news.insert(news)
         # print("已爬完"+str(cate["category"]))
-    print("新浪主流板块新闻 completed")
+    print("Sina basic completed")

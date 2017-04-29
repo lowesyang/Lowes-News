@@ -55,7 +55,7 @@ URL=[
 ]
 
 def netease():
-    print("开始爬取网易新闻")
+    print("Begin to get netease news")
     for k in range(0,len(URL)):
         try:
             data=get_page_decode(URL[k]['url'])
