@@ -1,6 +1,3 @@
-let createHandler=require("github-webhook-handler");
-let handler=createHandler({path:'/',secret:'lowesyang'});
-
 function runCmd(cmd,args,callback){
     let spawn=require("child_process").spawn;
     let child=spawn(cmd,args);

@@ -1,5 +1,7 @@
 let http=require("http");
-let handler=require("./runCmd").handler;
+let createHandler=require("github-webhook-handler");
+let handler=createHandler({path:'/',secret:'lowesyang'});
+
 let runCmd=require("./runCmd").runCmd;
 
 handler.on('err',(err)=>{
