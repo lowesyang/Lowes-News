@@ -1,4 +1,5 @@
 let http=require("http");
+let handler=require("./runCmd").handler;
 let runCmd=require("./runCmd").runCmd;
 
 handler.on('err',(err)=>{

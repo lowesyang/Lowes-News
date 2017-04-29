@@ -15,5 +15,6 @@ function runCmd(cmd,args,callback){
 }
 
 module.exports={
+    handler,
     runCmd
 }
