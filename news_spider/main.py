@@ -2,7 +2,7 @@ import multiprocessing
 import sys
 from netease import netease
 from sohu import sohu
-sys.path.append('sina')
+sys.path.append('news_spider/sina')
 from sina import sina
 
 if __name__ == '__main__':
