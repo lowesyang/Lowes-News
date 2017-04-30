@@ -9,5 +9,6 @@ git pull origin master
 echo "Pull finished"
 cnpm install
 npm run deploy
-echo "build completed"
+echo "Deploy completed"
+pm2 reload news_server
 echo "pm2 reload completed"
