@@ -40,7 +40,6 @@ let recom=require(path.resolve(__dirname,ROUTEPATH,"recom"));
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.use(express.static("src"));
 
 
 if(isDev) {
@@ -66,6 +65,8 @@ if(isDev) {
 
     let server=http.createServer(app);
     reload(server,app);
+
+    app.use(express.static("src"));
     server.listen(port,()=>{
         console.log("App(dev) is now running on port 3000!");
     });
