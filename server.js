@@ -72,7 +72,6 @@ if(isDev) {
     });
 }
 else{
-    app.use(express.static("dist"));
     app.listen(port,(err)=>{
         if(err){
             return console.log(err);
@@ -81,7 +80,7 @@ else{
 
 }
 app.use("/",[news,login.login,login.register]);
+!isDev && app.use(express.static("dist"));
 app.use(login.loginCheck);
 app.use("/recom",recom);
-
 
