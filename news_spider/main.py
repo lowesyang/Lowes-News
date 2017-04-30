@@ -19,9 +19,11 @@ if __name__ == '__main__':
     db.netease_news.ensure_index([("expire",-1)],expireAfterSeconds=expireTime)
     db.sina_news.ensure_index([("expire",-1)],expireAfterSeconds=expireTime)
     db.sohu_news.ensure_index([("expire",-1)],expireAfterSeconds=expireTime)
-
+    p1.start()
+    p2.start()
+    p3.start()
     while True:
-        p1.start()
-        p2.start()
-        p3.start()
         time.sleep(3600)
+        p1.run()
+        p2.run()
+        p3.run()
