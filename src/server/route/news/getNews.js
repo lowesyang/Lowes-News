@@ -16,7 +16,7 @@ function getNews(type,page,pcount,isGetContent){
         let res=[];
         // netease
         let getNetease=new Promise((resolve,reject)=>{
-            neteaseNews.find({category:{$regex:type}}).skip((page-1)*pcount).
+            neteaseNews.find({category:{$regex:type}}).sort({ptime:-1}).skip((page-1)*pcount).
             limit(pcount).exec((err,data)=>{
                 if(err) reject(new Error("Fail to get news from [netease]"));
                 res=res.concat(data);
@@ -26,7 +26,7 @@ function getNews(type,page,pcount,isGetContent){
 
         // sina
         let getSina=new Promise((resolve,reject)=>{
-            sinaNews.find({category:{$regex:type}}).skip((page-1)*pcount).
+            sinaNews.find({category:{$regex:type}}).sort({cdateTime:-1}).skip((page-1)*pcount).
             limit(pcount).exec((err,data)=>{
                 if(err) reject(new Error("Fail to get news from [sina]"));
                 res=res.concat(data);
@@ -36,7 +36,7 @@ function getNews(type,page,pcount,isGetContent){
 
         // sohu
         let getSohu=new Promise((resolve,reject)=>{
-            sohuNews.find({category:{$regex:type}}).skip((page-1)*pcount).
+            sohuNews.find({category:{$regex:type}}).sort({time:-1}).skip((page-1)*pcount).
             limit(pcount).exec((err,data)=>{
                 if(err) reject(new Error("Fail to get news from [sohu]"));
                 res=res.concat(data);

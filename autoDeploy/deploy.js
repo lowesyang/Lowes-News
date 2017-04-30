@@ -2,7 +2,7 @@ let http=require("http");
 let createHandler=require("github-webhook-handler");
 let handler=createHandler({path:'/',secret:'lowesyang'});
 
-let runCmd=require("./runCmd").runCmd;
+let runCmd=require("./runCmd");
 
 handler.on('err',(err)=>{
     console.log('Error:',err.message);

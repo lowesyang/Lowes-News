@@ -9,7 +9,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=dev supervisor -w server.js,src/server server.js",
     "build": "webpack -p --config config/webpack.prod.config.js & cross-env NODE_ENV=production node server.js",
-    "deploy":"webpack -p --config config/webpack.prod.config.js & cross-env NODE_ENV=production pm2 reload server.js"
+    "deploy":"webpack -p --config config/webpack.prod.config.js & pm2 reload server.js"
   },
   "keywords": [],
   "devDependencies": {

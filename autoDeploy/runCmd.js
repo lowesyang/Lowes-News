@@ -11,6 +11,4 @@ function runCmd(cmd,args,callback){
     })
 }
 
-module.exports={
-    runCmd
-}
+module.exports=runCmd

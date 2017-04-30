@@ -2,6 +2,7 @@
 
 from lxml import etree
 from getPage import get_page_decode
+from datetime import datetime
 import pymongo
 import json
 import re
@@ -82,6 +83,7 @@ def netease():
             # 查询是否已存在该条新闻
             save_item=db.netease_news.find_one({'docid':news['docid']})
             if save_item is None:
+                news['expire']=datetime.utcnow()
                 db.netease_news.insert(news)
         # print("已爬完"+URL[k]['category'])
     print("netease completed!")

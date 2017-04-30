@@ -2,6 +2,7 @@
 
 from lxml import etree
 from getPage import get_page
+from datetime import datetime
 import pymongo
 import json
 import uuid
@@ -94,6 +95,7 @@ def sohu():
                 # 查询是否已存在该条记录
                 save_item=db.sohu_news.find_one({'docID':item['docID']})
                 if save_item is None:
+                    item['expire']=datetime.utcnow()
                     db.sohu_news.insert(item)
                 # print(item)
         # print("已爬完"+str(CATEGORY[k]['name']))

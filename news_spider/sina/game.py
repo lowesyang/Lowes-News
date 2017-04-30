@@ -1,5 +1,6 @@
 # 新浪游戏
 from lxml import etree
+from datetime import datetime
 import pymongo
 import json
 import re
@@ -67,6 +68,7 @@ def getGameNews():
             # 查询是否已存在该记录
             save_item=db.sina_news.find_one({"docID":news["docID"]})
             if save_item is None:
+                news['expire']=datetime.utcnow()
                 db.sina_news.insert(news)
         # print("已爬完"+str(game["scate"]))
     print("Sina game completed!")
