@@ -29,7 +29,7 @@ router.get("/news/:type?",(req,res)=>{
                 (err,html)=>{
                     if(err) return res.status(500).send("Server Error");
                     let result=views.indexHtml
-                        .replace("<div id=newsList></div>",html)
+                        .replace("<div id=NEWSLIST></div>",html)
                         .replace("<title></title>",`<title>${cateToName(type)} | LowesNews</title>`);
                     res.send(result)
                 }
