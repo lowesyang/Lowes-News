@@ -27,7 +27,11 @@ function multiCalculate(payload,processNum = 1){
 
             promise.push(new Promise((resolve,reject)=>{
                 let child=childProcess.fork(path.resolve(__dirname,'worker.js'));
-                child.send(payload);
+                child.send({
+                    newsList:news,
+                    colForUser:payload.colForUser,
+                    taste:payload.taste
+                });
                 child.on('error',()=>{
                     resolve();
                     child.kill();

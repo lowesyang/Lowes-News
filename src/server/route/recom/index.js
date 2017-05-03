@@ -38,22 +38,21 @@ router.get("/list/:type?",(req,res)=>{
             colForUser.push(taste[word]);
         }
 
-        let time=Date.now();
         getNews(type, 1, totalPerSrc,false).then((news) => {
             // 计算每个新闻与用户的皮尔斯相似度
+            let time=Date.now();
+
             multiCalculate({
                 newsList:news,
                 colForUser:colForUser,
                 taste:taste
             },2).then((newsList)=>{
-                console.log(newsList.length)
-
                 newsList.sort((a,b)=>{
                     return b.pearson - a.pearson;
                 }).slice(0,100);
                 // 将筛选出来的推荐新闻数组缓存
                 cache.set(req.user._id, JSON.stringify(resArr));
-
+                console.log("皮尔斯系数：",(Date.now()-time)/1000);
                 return res.json({
                     code: 0,
                     msg: `向您推荐了${recomNum}条新闻`,
