@@ -45,7 +45,7 @@ router.get("/list/:type?",(req,res)=>{
                 newsList:news,
                 colForUser:colForUser,
                 taste:taste
-            }).then((newsList)=>{
+            },2).then((newsList)=>{
                 console.log(newsList.length)
 
                 newsList.sort((a,b)=>{
