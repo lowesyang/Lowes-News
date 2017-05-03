@@ -39,6 +39,11 @@
 
 <script>
     export default{
+        data(){
+            return{
+                setTm:null
+            }
+        },
         props:{
             type:{
                 type:String,
@@ -60,10 +65,10 @@
         },
         methods:{
             delayHidden(){
-                let setTm;
-                setTimeout(()=>{
+                this.setTm && clearTimeout(this.setTm);
+                this.setTm=setTimeout(()=>{
                     this.hidden=true;
-                    setTm=null;
+                    this.setTm=null;
                 },5000);
             }
         }

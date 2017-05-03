@@ -6,17 +6,16 @@ let userModel=require("../../model").users;
 let getNewsDetail=require("../news/getNews").getNewsDetail;
 let getNews=require("../news/getNews").getNews;
 let handle=require("./handle");
-let checkTypeOfWord=handle.checkTypeOfWord;
-let pearsonCorrelation=handle.pearsonCorrelation;
 let getNewsByRandom=handle.getNewsByRandom;
+let checkTypeOfWord=handle.checkTypeOfWord;
 let Segment=require("segment");
 let segment=new Segment();
 segment.useDefault();
-
+let multiCalculate=handle.multiCalculate;
 let LRU=require("lru-cache");
 let cache=LRU({
     max:1000,
-    maxAge:1000*60
+    maxAge:1000*1000*30
 });
 
 /**
@@ -30,6 +29,8 @@ router.get("/list/:type?",(req,res)=>{
     let userInfo=req.user;
     let taste=userInfo.favor.taste || {};
     let resArr=cache.get(req.user._id);
+    console.log(resArr)
+    let totalPerSrc=100;     // 每个平台抓取的新闻
     // console.log(resArr)
     if(!resArr) {
         // 用户特征分布集合
@@ -38,55 +39,43 @@ router.get("/list/:type?",(req,res)=>{
             colForUser.push(taste[word]);
         }
 
-        getNews(type, 1, 70,true).then((news) => {
-            let resArr = [],pearson;
+        let time=Date.now();
+        getNews(type, 1, totalPerSrc,false).then((news) => {
+            console.log("推荐列表，已获取备选新闻，用时:"+(Date.now()-time)/1000);
+            time=Date.now();
             // 计算每个新闻与用户的皮尔斯相似度
-            news.forEach((item) => {
-                let words = segment.doSegment(item.content, {
-                    stripPuncutation: true,
-                    stripStopword: true
-                });
-                let newsCharacter = {};       //存储新闻特征值的频率
-                let colForNews = [];
-                words.forEach((obj) => {
-                    // 如果是合法的特征词且用户特征中有
-                    if (checkTypeOfWord(obj) && taste[obj.w]) {
-                        newsCharacter[obj.w] = newsCharacter[obj.w] ? newsCharacter[obj.w] + 1 : 1;
-                    }
-                });
-                // 组装用户特征和新闻特征的两个数据集
-                for (let word in taste) {
-                    colForNews.push(newsCharacter[word] || 0);
-                }
-                // 没有相同特征词
-                if(colForUser.length==0){
-                    pearson=0;
-                }else {
-                    pearson = pearsonCorrelation(colForUser, colForNews);
-                    // console.log(pearson)
-                }
-                // 不传内容，节约网络流量
-                item.content="";
-                resArr.push({
-                    pearson,
-                    news: item
-                })
-            });
-            resArr.sort((a,b)=>{
-                return b.pearson - a.pearson;
-            }).slice(0,100);
-            // 将筛选出来的推荐新闻数组缓存
-            cache.set(req.user._id, resArr);
+            multiCalculate({
+                newsList:news,
+                colForUser:colForUser,
+                taste:taste
+            }).then((newsList)=>{
+                console.log("处理完皮尔逊系数，用时："+(Date.now()-time)/1000);
+                time=Date.now()
+                console.log(newsList.length)
 
-            return res.json({
-                code: 0,
-                msg: `向您推荐了${recomNum}条新闻`,
-                body: {
-                    data: getNewsByRandom(resArr, recomNum)
-                }
+                newsList.sort((a,b)=>{
+                    return b.pearson - a.pearson;
+                }).slice(0,100);
+                console.log("完成推荐数组排序，用时："+(Date.now()-time)/1000);
+                // 将筛选出来的推荐新闻数组缓存
+                cache.set(req.user._id, JSON.stringify(resArr));
+
+                return res.json({
+                    code: 0,
+                    msg: `向您推荐了${recomNum}条新闻`,
+                    body: {
+                        data: getNewsByRandom(newsList, recomNum)
+                    }
+                })
+            }).catch((err)=>{
+                // console.log(err)
+                return res.json({
+                    code:-1,
+                    msg:err
+                })
             })
         }).catch((err)=>{
-            console.log(err);
+            // console.log(err);
             return res.json({
                 code:-1,
                 msg:"获取推荐列表失败"
@@ -98,7 +87,7 @@ router.get("/list/:type?",(req,res)=>{
             code: 0,
             msg: `向您推荐了${recomNum}条新闻`,
             body: {
-                data: getNewsByRandom(resArr, recomNum)
+                data: getNewsByRandom(JSON.parse(resArr), recomNum)
             }
         })
     }

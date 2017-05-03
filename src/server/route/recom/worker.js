@@ -1,0 +1,53 @@
+let handle=require("./handle");
+let checkTypeOfWord=handle.checkTypeOfWord;
+let pearsonCorrelation=handle.pearsonCorrelation;
+let Segment=require("segment");
+let segment=new Segment();
+segment.useDefault();
+
+process.on('message',(data)=>{
+    let news=data.newsList,
+        colForUser=data.colForUser,
+        taste=data.taste,
+        pearson,
+        resArr=[];
+    news.forEach((item) => {
+        let words = segment.doSegment(item.content, {
+            stripPuncutation: true,
+            stripStopword: true
+        });
+        let newsCharacter = {};       //存储新闻特征值的频率
+        let colForNews = [];
+        words.forEach((obj) => {
+            // 如果是合法的特征词且用户特征中有
+            if (checkTypeOfWord(obj) && taste[obj.w]) {
+                newsCharacter[obj.w] = newsCharacter[obj.w] ? newsCharacter[obj.w] + 1 : 1;
+            }
+        });
+        // 组装用户特征和新闻特征的两个数据集
+        for (let word in taste) {
+            colForNews.push(newsCharacter[word] || 0);
+        }
+        // 没有相同特征词
+        if(colForUser.length === 0){
+            pearson=0;
+        }else {
+            pearson = pearsonCorrelation(colForUser, colForNews);
+            // console.log(pearson)
+        }
+        // 不传内容，节约网络流量
+        item.content="";
+        resArr.push({
+            pearson,
+            news: item
+        })
+    });
+    process.send({
+        newsList:resArr
+    });
+    process.exit();
+});
+
+process.on('disconnect',()=>{
+    process.exit();
+})

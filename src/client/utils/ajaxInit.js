@@ -6,7 +6,7 @@ import {LS,setHttpHeaders} from "../utils";
 
 window.Promise=Promise;
 
-axios.default.timeout=30*1000;  //20s timeout
+axios.default.timeout=30*1000;  //30s timeout
 setHttpHeaders("access-token",LS.getItem("ggsimida")||"");
 axios.interceptors.response.use((response)=>{
     if(response.status==500

@@ -21,16 +21,21 @@ router.get("/news/:type?",(req,res)=>{
     let type=req.params.type || "",
         page=1,
         pcount=10;
-
+    let time=Date.now();
     getNews(type,page,pcount,false)
         .then((data)=>{
+            console.log("获取完新闻用时:"+ (Date.now()-time)/1000);
+            time=Date.now();
             renderer.renderToString(
                 newsList(data),
                 (err,html)=>{
+                    console.log("vue渲染完成用时:"+ (Date.now()-time)/1000);
+                    time=Date.now();
                     if(err) return res.status(500).send("Server Error");
                     let result=views.indexHtml
                         .replace("<div id=NEWSLIST></div>",html)
                         .replace("<title></title>",`<title>${cateToName(type)} | LowesNews</title>`);
+                    console.log("响应用时:"+ (Date.now()-time)/1000);
                     res.send(result)
                 }
             )

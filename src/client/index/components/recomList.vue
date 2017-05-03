@@ -236,11 +236,11 @@
                         res.body.data.forEach((item)=>{
                             data.push(item.news)
                         });
-                        this.isLoading=false;
 
                         this.recomList=data;
                         this.alertMsg=res.msg;
                     }
+                    this.isLoading=false;
                 }).catch(()=>{
                     this.isLoading=false;
                 })

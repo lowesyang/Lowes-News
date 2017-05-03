@@ -1,3 +1,52 @@
+let childProcess=require("child_process");
+let path=require("path");
+
+/**
+ * 多进程计算皮尔逊相关系数
+ * @param {Object} payload  数据结构体
+ * {
+ *      newsList 新闻列表
+ *      colForUser  用户特征数据集
+ *      taste  用户特征对象
+ * }
+ * @param {Number} processNum  开启的进程数量，默认为1
+ */
+function multiCalculate(payload,processNum = 1){
+    return new Promise((resolv,rej)=>{
+        let total=payload.newsList.length;
+        let numPerProcess=parseInt(total/processNum);
+        let promise=[]; //Promise列表
+        let resArr=[];  //结果列表
+
+        // 创建子进程处理任务
+        let news,begin,end;
+        for(let i=0;i<processNum;i++){
+            begin=i*numPerProcess;
+            end=begin+numPerProcess;
+            news=payload.newsList.slice(begin,end);
+
+            promise.push(new Promise((resolve,reject)=>{
+                let child=childProcess.fork(path.resolve(__dirname,'worker.js'));
+                child.send(payload);
+                child.on('error',()=>{
+                    resolve();
+                    child.kill();
+                });
+                child.on('message',(data)=>{
+                    resArr=resArr.concat(data.newsList);
+                    resolve();
+                })
+            }))
+        }
+
+        Promise.all(promise).then(()=>{
+            resolv(resArr);
+        }).catch(()=>{
+            rej("多进程任务发生未知错误");
+        })
+    })
+}
+
 /**
  * 判断单词类型
  * @param word
@@ -79,6 +128,7 @@ function average(collection){
 }
 
 module.exports={
+    multiCalculate,
     checkTypeOfWord,
     pearsonCorrelation,
     getNewsByRandom

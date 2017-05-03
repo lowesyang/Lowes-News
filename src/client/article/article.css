@@ -19,6 +19,9 @@ figure,.image{
 .img_descr{
     font-size:12px;
 }
+.img_wrapper{
+    text-align: center;
+}
 
 article{
     padding-top:60px;
