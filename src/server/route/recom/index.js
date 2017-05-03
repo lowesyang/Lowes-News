@@ -29,7 +29,6 @@ router.get("/list/:type?",(req,res)=>{
     let userInfo=req.user;
     let taste=userInfo.favor.taste || {};
     let resArr=cache.get(req.user._id);
-    console.log(resArr)
     let totalPerSrc=100;     // 每个平台抓取的新闻
     // console.log(resArr)
     if(!resArr) {
@@ -41,22 +40,17 @@ router.get("/list/:type?",(req,res)=>{
 
         let time=Date.now();
         getNews(type, 1, totalPerSrc,false).then((news) => {
-            console.log("推荐列表，已获取备选新闻，用时:"+(Date.now()-time)/1000);
-            time=Date.now();
             // 计算每个新闻与用户的皮尔斯相似度
             multiCalculate({
                 newsList:news,
                 colForUser:colForUser,
                 taste:taste
             }).then((newsList)=>{
-                console.log("处理完皮尔逊系数，用时："+(Date.now()-time)/1000);
-                time=Date.now()
                 console.log(newsList.length)
 
                 newsList.sort((a,b)=>{
                     return b.pearson - a.pearson;
                 }).slice(0,100);
-                console.log("完成推荐数组排序，用时："+(Date.now()-time)/1000);
                 // 将筛选出来的推荐新闻数组缓存
                 cache.set(req.user._id, JSON.stringify(resArr));
 
