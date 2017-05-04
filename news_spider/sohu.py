@@ -3,6 +3,7 @@
 from lxml import etree
 from getPage import get_page
 from datetime import datetime
+from wordSegment import wordSegment
 import pymongo
 import json
 import uuid
@@ -92,6 +93,8 @@ def sohu():
                         item['content']+=etree.tounicode(content[j])
                 item['docID']=uuid.uuid3(uuid.NAMESPACE_DNS,item['content'])
                 item['source']="搜狐网"
+                # 新闻特征统计
+                item['feature']=wordSegment(item['content'])
                 # 查询是否已存在该条记录
                 save_item=db.sohu_news.find_one({'docID':item['docID']})
                 if save_item is None:

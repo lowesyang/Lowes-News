@@ -15,6 +15,7 @@ let newsItem=new Schema({
     source:String,          //来源
     link:String,            //新闻url
     content:String,         //内容
+    feature:Object      //新闻特征，在之后添加
 });
 
 module.exports=db.model('sina_news',newsItem);

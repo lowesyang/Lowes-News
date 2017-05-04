@@ -3,6 +3,7 @@
 from lxml import etree
 from getPage import get_page_decode
 from datetime import datetime
+from wordSegment import wordSegment
 import pymongo
 import json
 import re
@@ -55,6 +56,8 @@ URL=[
     }
 ]
 
+
+
 def netease():
     print("Begin to get netease news")
     for k in range(0,len(URL)):
@@ -80,6 +83,8 @@ def netease():
             # 此处不能用tostring，否则会有乱码，mongodb将当成binary来处理
             content=etree.tounicode(content)    
             news['content']=content
+            # 新闻特征统计
+            news['feature']=wordSegment(content)
             # 查询是否已存在该条新闻
             save_item=db.netease_news.find_one({'docid':news['docid']})
             if save_item is None:

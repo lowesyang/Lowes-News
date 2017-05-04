@@ -12,6 +12,7 @@ let Segment=require("segment");
 let segment=new Segment();
 segment.useDefault();
 let multiCalculate=handle.multiCalculate;
+let pearsonCorrelation=handle.pearsonCorrelation;
 let LRU=require("lru-cache");
 let cache=LRU({
     max:1000,
@@ -29,40 +30,59 @@ router.get("/list/:type?",(req,res)=>{
     let userInfo=req.user;
     let taste=userInfo.favor.taste || {};
     let resArr=cache.get(req.user._id);
-    let totalPerSrc=100;     // 每个平台抓取的新闻
+    let totalPerSrc=50;     // 每个平台抓取的新闻
     // console.log(resArr)
     if(!resArr) {
         // 用户特征分布集合
-        let colForUser=[];
+        let colForUser=[],pearson;
+        resArr=[];
         for(let word in taste){
             colForUser.push(taste[word]);
         }
 
-        getNews(type, 1, totalPerSrc,false).then((news) => {
+        getNews(type, 1, totalPerSrc,true).then((news) => {
             // 计算每个新闻与用户的皮尔斯相似度
-            multiCalculate({
-                newsList:news,
-                colForUser:colForUser,
-                taste:taste
-            },2).then((newsList)=>{
-                newsList.sort((a,b)=>{
-                    return b.pearson - a.pearson;
-                }).slice(0,100);
-                // 将筛选出来的推荐新闻数组缓存
-                cache.set(req.user._id, JSON.stringify(resArr));
-                return res.json({
-                    code: 0,
-                    msg: `向您推荐了${recomNum}条新闻`,
-                    body: {
-                        data: getNewsByRandom(newsList, recomNum)
+            news.forEach((item) => {
+                let newsCharacter = {};       //存储新闻特征值的频率
+                let colForNews = [];
+                for(let word in item.feature){
+                    // 如果是合法的特征词且用户特征中有
+                    if (taste[word]) {
+                        newsCharacter[word] = newsCharacter[word] ? newsCharacter[word] + 1 : 1;
                     }
+                }
+                // 组装用户特征和新闻特征的两个数据集
+                for (let word in taste) {
+                    colForNews.push(newsCharacter[word] || 0);
+                }
+
+                // console.log(colForNews.length,colForUser.length)
+                // 没有相同特征词
+                if(colForUser.length === 0){
+                    pearson = 0;
+                }else {
+                    pearson = pearsonCorrelation(colForUser, colForNews);
+                    // console.log(pearson)
+                }
+                // 删除前端不需要的属性，节约网络流量
+                item.content=null;
+                item.feature=null;
+                resArr.push({
+                    pearson,
+                    news: item
                 })
-            }).catch((err)=>{
-                // console.log(err)
-                return res.json({
-                    code:-1,
-                    msg:err
-                })
+            });
+            resArr.sort((a,b)=>{
+                return b.pearson - a.pearson;
+            }).slice(0,100);
+            // 将筛选出来的推荐新闻数组缓存
+            cache.set(req.user._id, JSON.stringify(resArr));
+            return res.json({
+                code: 0,
+                msg: `向您推荐了${recomNum}条新闻`,
+                body: {
+                    data: getNewsByRandom(resArr, recomNum)
+                }
             })
         }).catch((err)=>{
             // console.log(err);

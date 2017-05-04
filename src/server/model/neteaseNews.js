@@ -15,6 +15,7 @@ let newsItem=new Schema({
     category:String,    //板块
     source:String,      //来源
     content:String,     //内容
+    feature:Object      //新闻特征，在之后添加
 });
 
 module.exports=db.model('netease_news',newsItem);

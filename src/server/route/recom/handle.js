@@ -1,7 +1,7 @@
 let childProcess=require("child_process");
 let path=require("path");
 
-/**
+/** 已弃用！！！！
  * 多进程计算皮尔逊相关系数
  * @param {Object} payload  数据结构体
  * {
@@ -106,7 +106,6 @@ function pearsonCorrelation(colX,colY){
     let Exy=average(colX.map((item,i)=>{
         return item*colY[i];
     }));
-
     // 分母部分
     let E2x=average(colX.map((item)=>{
         return item*item;
@@ -117,7 +116,7 @@ function pearsonCorrelation(colX,colY){
 
     let vx=E2x-Ex*Ex,vy=E2y-Ey*Ey;
     // 分母为0，代表标准差为0，其中一组分布为常数，则相关系数无意义
-    if(!vx || !vx) return 0;
+    if(!vx || !vy) return 0;
     return (Exy-Ex*Ey)/Math.pow(vx*vy,0.5);
 }
 

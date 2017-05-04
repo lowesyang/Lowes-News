@@ -6,6 +6,7 @@ import json
 import re
 sys.path.append("..")
 from getPage import get_page_decode
+from wordSegment import wordSegment
 
 connect=pymongo.MongoClient('127.0.0.1',27017)
 db=connect.news_collect
@@ -69,6 +70,8 @@ def getBasicNews():
                     for cont in content:
                         if cont is not None:
                             news['content']+=etree.tounicode(cont)
+                    # 新闻特征统计
+                    news['feature']=wordSegment(news['content'])
                 except Exception as err:
                     # print(str(err)+" and skip "+str(cate)+" news")
                     continue
