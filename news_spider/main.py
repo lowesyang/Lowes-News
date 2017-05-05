@@ -9,7 +9,7 @@ import pymongo
 connect=pymongo.MongoClient('127.0.0.1',27017)
 db=connect.news_collect
 
-expireTime=3600*24*12
+expireTime=3600*24*30
 
 if __name__ == '__main__':
     p1=multiprocessing.Process(target=netease)
