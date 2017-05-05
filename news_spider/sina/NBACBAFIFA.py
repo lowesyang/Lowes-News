@@ -53,8 +53,8 @@ def getNBACBAFIFA():
                     for art in article:
                         if art is not None:
                             news["content"]+=etree.tounicode(art)
-                    # 新闻特征统计
-                    news['feature']=wordSegment(news['content'])
+                # 新闻特征统计
+                news['feature']=wordSegment(news['content'])
             except Exception as err:
                 # print(str(err)+" skip "+str(cate["scate"])+" news")
                 continue
