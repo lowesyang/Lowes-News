@@ -236,7 +236,8 @@
                         res.body.data.forEach((item)=>{
                             data.push(item.news)
                         });
-
+                        // 更新token
+                        LS.setItem("ggsimida",res.token);
                         this.recomList=data;
                         this.alertMsg=res.msg;
                     }

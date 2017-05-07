@@ -80,6 +80,7 @@ router.get("/list/:type?",(req,res)=>{
             return res.json({
                 code: 0,
                 msg: `向您推荐了${recomNum}条新闻`,
+                token:req.token,
                 body: {
                     data: getNewsByRandom(resArr, recomNum)
                 }
@@ -96,6 +97,7 @@ router.get("/list/:type?",(req,res)=>{
         return res.json({
             code: 0,
             msg: `向您推荐了${recomNum}条新闻`,
+            token:req.token,
             body: {
                 data: getNewsByRandom(JSON.parse(resArr), recomNum)
             }

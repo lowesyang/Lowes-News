@@ -9,21 +9,20 @@ window.Promise=Promise;
 axios.default.timeout=30*1000;  //30s timeout
 setHttpHeaders("access-token",LS.getItem("ggsimida")||"");
 axios.interceptors.response.use((response)=>{
-    if(response.status==500
-        || response.data.code==-1){
+    if(response.data.code==-1){
         //验证失败
-        Vue.toasted.error(response.data.msg || "服务器向你丢来一个错误!");
+        Vue.toasted.error(response.data.msg);
     }
-    // token invalid
-    if(response.status==401) {
-        Vue.toasted.error("token失效，请重新登录!");
-        Bridge.$emit("logout");
-    }
-
     return response;
 
 },(err)=>{
-    Vue.toasted.error(err.toString());
+    if(err.response.status === 500){
+        Vue.toasted.error("服务器向你丢来一个错误!");
+    }
+    // token invalid
+    if(err.response.status === 401) {
+        Bridge.$emit("logout");
+    }
     return Promise.reject(err);
 });
 
