@@ -8,7 +8,7 @@ import pymongo
 import json
 import re
 
-connect=pymongo.MongoClient('127.0.0.1',27017)
+connect=pymongo.MongoClient('mongodb://lowesyang:19951102@115.159.147.165:27017')
 db=connect.news_collect
 
 url_reg=re.compile(r'(http)|(https)')

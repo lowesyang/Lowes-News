@@ -34,6 +34,10 @@ router.get("/news/:type?",(req,res)=>{
                 }
             )
         })
+        .catch((err)=>{
+            console.log(err.toString());
+            res.status(500).send()
+        })
 });
 
 /** ajax加载额外新闻

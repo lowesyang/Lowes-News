@@ -10,7 +10,7 @@ import uuid
 import re
 import time
 
-connect=pymongo.MongoClient('127.0.0.1',27017)
+connect=pymongo.MongoClient('mongodb://lowesyang:19951102@115.159.147.165:27017')
 db=connect.news_collect
 
 time_reg=re.compile(r'\d+-\d+ \d+:\d+')

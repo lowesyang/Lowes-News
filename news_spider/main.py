@@ -6,9 +6,8 @@ sys.path.append('sina')
 from sina import sina
 import pymongo
 
-connect=pymongo.MongoClient('127.0.0.1',27017)
+connect=pymongo.MongoClient('mongodb://lowesyang:19951102@115.159.147.165:27017')
 db=connect.news_collect
-
 expireTime=3600*24*30
 
 if __name__ == '__main__':

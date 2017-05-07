@@ -13,6 +13,7 @@ module.exports=merge.smart({},webpackBasicConfig,{
     },
     output:{
         path:path.resolve(__dirname,'..','dist'),
+        publicPath:'/',
         filename:'[name].[chunkhash:7].js',
         chunkFilename:'[name].[chunkhash:7].js'
     },

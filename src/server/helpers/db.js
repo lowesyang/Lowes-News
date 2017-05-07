@@ -1,5 +1,5 @@
 let mongoose=require("mongoose");
-let url="mongodb://localhost:27017/news_collect";
+let url="mongodb://lowesyang:19951102@115.159.147.165:27017/news_collect";
 
 mongoose.connect(url,{
     server:{
