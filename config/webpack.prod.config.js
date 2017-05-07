@@ -1,11 +1,11 @@
 var webpack=require("webpack");
 var path=require("path");
 var HtmlWebpackPlugin=require("html-webpack-plugin");
-var webpackDevConfig=require("./webpack.dev.config");
+var webpackBasicConfig=require("./webpack.basic.config");
 var merge=require("webpack-merge");
 var ExtractTextPlugin=require("extract-text-webpack-plugin");
 
-module.exports=merge.smart({},webpackDevConfig,{
+module.exports=merge.smart({},webpackBasicConfig,{
     entry:{
         index:path.resolve(__dirname,'..','src/client/index'),
         article:path.resolve(__dirname,'..','src/client/article'),
@@ -44,7 +44,7 @@ module.exports=merge.smart({},webpackDevConfig,{
     plugins:[
         new webpack.optimize.CommonsChunkPlugin({
             name:'vendor',
-            filename:'[name].[hash:7].js'
+            filename:'[name].[chunkhash:7].js'
         }),
         new webpack.optimize.UglifyJsPlugin({
             compress:{

@@ -1,7 +1,7 @@
 {
-  "name": "vue-express-hotload-template",
-  "version": "1.0.0",
-  "description": "Vue+express server-render full-stack autoreload 全栈自动刷新开发模板",
+  "name": "Lowes-News",
+  "version": "1.0.4",
+  "description": "Lowes-News",
   "main": "index.js",
   "directories": {
     "test": "test"
