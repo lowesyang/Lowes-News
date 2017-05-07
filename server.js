@@ -79,8 +79,8 @@ else{
     })
 
 }
-!isDev && app.use(express.static("dist"));      //必须放在服务端渲染之后，否则在Nginx下会加载到dist中的index.html
 app.use("/",[news,login.login,login.register]);
+!isDev && app.use(express.static("dist"));      //必须放在服务端渲染之后，否则在Nginx下会加载到dist中的index.html
 app.use(login.loginCheck);
 app.use("/recom",recom);
 
