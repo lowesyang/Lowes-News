@@ -1,5 +1,9 @@
 let mongoose=require("mongoose");
-let url="mongodb://lowesyang:19951102@115.159.147.165:27017/news_collect";
+let isDev=process.env.NODE_ENV === "dev";
+
+let url=isDev?
+    "mongodb://localhost:27017/news_collect":
+    "mongodb://lowesyang:19951102@localhost:27017/news_collect";
 
 mongoose.connect(url,{
     server:{
