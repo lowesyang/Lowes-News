@@ -2,11 +2,12 @@ import multiprocessing
 import sys,time
 from netease import netease
 from sohu import sohu
+from config import dbUrl
 sys.path.append('sina')
 from sina import sina
 import pymongo
 
-connect=pymongo.MongoClient('mongodb://lowesyang:19951102@115.159.147.165:27017')
+connect=pymongo.MongoClient(dbUrl)
 db=connect.news_collect
 expireTime=3600*24*30
 

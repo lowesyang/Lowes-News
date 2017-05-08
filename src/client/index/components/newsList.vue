@@ -5,13 +5,13 @@
                 <div class="item">
                     <div class="infoBox fl">
                         <div class="title">{{item.title}}</div>
-                        <div class="intro">{{item.digest || item.intro || item.title}}</div>
+                        <div class="intro">{{item.intro || item.title}}</div>
                         <div class="bottomBox">
                             <div class="source fl">{{item.source}}</div>
-                            <div class="time fl">{{item.ptime || item.cdateTime || item.time}}</div>
+                            <div class="time fl">{{item.time}}</div>
                         </div>
                     </div>
-                <lazy-image class="image fr" :src="item.imgsrc || item.img || '/images/noimg.jpg'"></lazy-image>
+                <lazy-image class="image fr" :src="item.img"></lazy-image>
                 </div>
             </a>
             <Pulse-loader :loading="loading" color="#657180" size="13px"></Pulse-loader>
@@ -72,6 +72,9 @@
                 let clientH=document.documentElement.clientHeight||document.body.clientHeight;
                 if(scrollTop + clientH + 20 > scrollH) return true;
                 else return false;
+            },
+            getNoImgId(){
+                return Math.floor(Math.random()*6+1);
             }
         },
         components:{

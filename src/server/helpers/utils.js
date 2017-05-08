@@ -13,7 +13,22 @@ function cateToName(category){
     return category;
 };
 
+/**
+ * 随机提取特定数目的数组元素
+ * @param arr  {Array}     数组
+ * @param count {Number}   指定数目(可选)
+ */
+function shuffle(arr,count = 0){
+    if(count>arr.length || !count) count=arr.length;
+    let rand;
+    for(let i=arr.length-1;i>=0;i--){
+        rand=Math.floor(Math.random()*i);
+        [arr[i],arr[rand]]=[arr[rand],arr[i]];
+    }
+    return arr.slice(0,count);
+}
 
 module.exports={
-    cateToName
+    cateToName,
+    shuffle
 }

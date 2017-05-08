@@ -1,11 +1,7 @@
-let neteaseNews=require("./neteaseNews");
-let sinaNews=require("./sinaNews");
-let sohuNews=require("./sohuNews");
+let news=require("./news");
 let users=require("./users");
 
 module.exports={
-    neteaseNews,
-    sinaNews,
-    sohuNews,
+    news,
     users
 }

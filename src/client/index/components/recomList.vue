@@ -11,7 +11,7 @@
         <div class="list">
             <a :href="'/p/'+item._id"  v-for="item in recomList" class="item" target="_blank">
                 <div class="title" v-text="item.title"></div>
-                <div class="intro" v-text="item.digest || item.intro || item.title"></div>
+                <div class="intro" v-text="item.intro || item.title"></div>
             </a>
         </div>
     </div>

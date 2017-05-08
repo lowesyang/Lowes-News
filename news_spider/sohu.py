@@ -4,13 +4,14 @@ from lxml import etree
 from getPage import get_page
 from datetime import datetime
 from wordSegment import wordSegment
+from config import dbUrl
 import pymongo
 import json
 import uuid
 import re
 import time
 
-connect=pymongo.MongoClient('mongodb://lowesyang:19951102@115.159.147.165:27017')
+connect=pymongo.MongoClient(dbUrl)
 db=connect.news_collect
 
 time_reg=re.compile(r'\d+-\d+ \d+:\d+')
@@ -93,13 +94,14 @@ def sohu():
                         item['content']+=etree.tounicode(content[j])
                 item['docID']=uuid.uuid3(uuid.NAMESPACE_DNS,item['content'])
                 item['source']="搜狐网"
+                item['platform']="sohu"
                 # 新闻特征统计
                 item['feature']=wordSegment(item['content'])
                 # 查询是否已存在该条记录
-                save_item=db.sohu_news.find_one({'docID':item['docID']})
+                save_item=db.news.find_one({'docID':item['docID']})
                 if save_item is None:
                     item['expire']=datetime.utcnow()
-                    db.sohu_news.insert(item)
+                    db.news.insert(item)
                 # print(item)
         # print("已爬完"+str(CATEGORY[k]['name']))
     print("sohu completed!")

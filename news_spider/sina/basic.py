@@ -7,8 +7,9 @@ import re
 sys.path.append("..")
 from getPage import get_page_decode
 from wordSegment import wordSegment
+from config import dbUrl
 
-connect=pymongo.MongoClient('mongodb://lowesyang:19951102@115.159.147.165:27017')
+connect=pymongo.MongoClient(dbUrl)
 db=connect.news_collect
 
 time_reg=re.compile(r'\d+-\d+-\d+ \d+:\d+')
@@ -51,6 +52,7 @@ def getBasicNews():
                     continue
                 news['category']=cate["category"]
                 news['cTime']=news['date']
+                news['url']=news['link']
                 # 获取详情页
                 try:
                     detail=get_page_decode(news['link'])
@@ -62,7 +64,7 @@ def getBasicNews():
                         time=time.group()
                     else:
                         time=timeExtra
-                    news['cdateTime']=time
+                    news['time']=time
                     news['content']=""
                     content=article.xpath('''//section[@class='art_pic_card']|//p[@class='art_t']
                     |//section[@class='video_module']|//div[@class='img_wrapper']''')
@@ -72,13 +74,14 @@ def getBasicNews():
                             news['content']+=etree.tounicode(cont)
                     # 新闻特征统计
                     news['feature']=wordSegment(news['content'])
+                    news['platform']="sina"
                 except Exception as err:
                     # print(str(err)+" and skip "+str(cate)+" news")
                     continue
                 # 查询是否已存在该条新闻
-                save_item=db.sina_news.find_one({'docID':news['docID']})
+                save_item=db.news.find_one({'docID':news['docID']})
                 if save_item is None:
                     news['expire']=datetime.utcnow()
-                    db.sina_news.insert(news)
+                    db.news.insert(news)
         # print("已爬完"+str(cate["category"]))
     print("Sina basic completed")

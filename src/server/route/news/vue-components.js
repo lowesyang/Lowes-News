@@ -8,13 +8,13 @@ let newsList=(newsList)=>{
         "<div class='item'>" +
         "<div class='infoBox fl'>" +
         "<div class='title'>{{item.title}}</div>" +
-        "<div class='intro'>{{item.digest || item.intro || item.title}}</div>" +
+        "<div class='intro'>{{item.intro || item.title}}</div>" +
         "<div class='bottomBox'>" +
         "<div class='source fl'>{{item.source}}</div>" +
-        "<div class='time fl'>{{item.ptime || item.cdateTime || item.time}}</div>" +
+        "<div class='time fl'>{{item.time}}</div>" +
         "</div>" +
         "</div>"+
-        "<lazy-image class='image fr' :src='item.imgsrc || item.img || \"/images/noimg.jpg\"'></lazy-image>"+
+        "<lazy-image class='image fr' :src='item.img'></lazy-image>"+
         "</div>" +
         "</a>" +
         "</div>",
@@ -36,11 +36,11 @@ let newsDetail=(info)=>{
         "<div class='title'>{{info.title}}</div>" +
         "<div class='infoBox'>" +
         "<span class='source'>{{info.source}}</span>" +
-        "<span class='time'>{{info.ptime || info.cdateTime || info.time}}</span>" +
+        "<span class='time'>{{info.time}}</span>" +
         "</div>" +
         "<div class='content' v-html='info.content'>" +
         "</div>" +
-        "<a :href='info.url || info.link' class='link' target='_blank'>原文链接</a>" +
+        "<a :href='info.url' class='link' target='_blank'>原文链接</a>" +
         "</div>",
         data(){
             return {

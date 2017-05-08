@@ -9,8 +9,9 @@ import sys
 sys.path.append("..")
 from getPage import get_page_decode
 from wordSegment import wordSegment
+from config import dbUrl
 
-connect=pymongo.MongoClient('mongodb://lowesyang:19951102@115.159.147.165:27017')
+connect=pymongo.MongoClient(dbUrl)
 db=connect.news_collect
 
 time_reg=re.compile(r'\d+-\d+-\d+ \d+:\d+')
@@ -39,7 +40,7 @@ def getGameNews():
         title_img=data.xpath("//img")
         for i in range(0,len(links)):
             news={}
-            news["link"]=links[i].attrib["href"]
+            news["url"]=links[i].attrib["href"]
             news["img"]=title_img[i].attrib["src"]
             news["source"]="新浪游戏"
             news["category"]="game"
@@ -63,15 +64,16 @@ def getGameNews():
                         news["content"]+=etree.tounicode(cont)
                 # 新闻特征统计
                 news['feature']=wordSegment(news['content'])
+                news['platform']="sina"
             except Exception as err:
                 # print(str(err)+" skip game news")
                 continue
             # 生成uuid
             news["docID"]=uuid.uuid3(uuid.NAMESPACE_DNS,news["content"])
             # 查询是否已存在该记录
-            save_item=db.sina_news.find_one({"docID":news["docID"]})
+            save_item=db.news.find_one({"docID":news["docID"]})
             if save_item is None:
                 news['expire']=datetime.utcnow()
-                db.sina_news.insert(news)
+                db.news.insert(news)
         # print("已爬完"+str(game["scate"]))
     print("Sina game completed!")

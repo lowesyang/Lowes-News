@@ -6,12 +6,11 @@ let userModel=require("../../model").users;
 let getNewsDetail=require("../news/getNews").getNewsDetail;
 let getNews=require("../news/getNews").getNews;
 let handle=require("./handle");
-let getNewsByRandom=handle.getNewsByRandom;
+let getNewsByRandom=require("../../helpers/utils").shuffle;
 let checkTypeOfWord=handle.checkTypeOfWord;
 let Segment=require("segment");
 let segment=new Segment();
 segment.useDefault();
-let multiCalculate=handle.multiCalculate;
 let pearsonCorrelation=handle.pearsonCorrelation;
 let LRU=require("lru-cache");
 let cache=LRU({

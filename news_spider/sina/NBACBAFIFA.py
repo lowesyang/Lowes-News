@@ -7,8 +7,9 @@ import json
 sys.path.append("..")
 from getPage import get_page_decode
 from wordSegment import wordSegment
+from config import dbUrl
 
-connect=pymongo.MongoClient('mongodb://lowesyang:19951102@115.159.147.165:27017')
+connect=pymongo.MongoClient(dbUrl)
 db=connect.news_collect
 
 SPORTEXTRA=[
@@ -40,6 +41,7 @@ def getNBACBAFIFA():
             try:
                 detail=get_page_decode(news["pc_url"])
                 detail=etree.HTML(detail)
+                news["url"]=news["pc_url"]
                 news["content"]=""
                 news["category"]="sports"
                 news["scate"]=cate["scate"]
@@ -55,13 +57,14 @@ def getNBACBAFIFA():
                             news["content"]+=etree.tounicode(art)
                 # 新闻特征统计
                 news['feature']=wordSegment(news['content'])
+                news['platform']="sina"
             except Exception as err:
                 # print(str(err)+" skip "+str(cate["scate"])+" news")
                 continue
             # 查询是否已存在该条新闻
-            save_item=db.sina_news.find_one({"news_id":news["news_id"]})
+            save_item=db.news.find_one({"news_id":news["news_id"]})
             if save_item is None:
                 news['expire']=datetime.utcnow()
-                db.sina_news.insert(news)
+                db.news.insert(news)
         # print("已爬完"+str(cate["scate"]))
     print("Sina NBA,CBA,FIFA completed!")

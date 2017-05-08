@@ -75,27 +75,6 @@ function checkTypeOfWord(word){
 }
 
 /**
- * 随机提取出指定数目的新闻
- * @param news  {Array}     新闻数组
- * @param count {Number}    指定数目
- */
-function getNewsByRandom(news,count){
-    if(count>news.length) count=news.length;
-    let num=count,used=[];
-    let res=[];
-    let randomIndex;
-    while(num--){
-        randomIndex=Math.floor(Math.random()*count);
-        while(used.indexOf(randomIndex)>=0){
-            randomIndex=Math.floor(Math.random()*count);
-        }
-        used.push(randomIndex);
-        res.push(news[randomIndex]);
-    }
-    return res;
-}
-
-/**
  * 皮尔逊相关系数
  * @param {Array} colX  Collection of data X
  * @param {Array} colY  Collection of data Y
@@ -133,6 +112,5 @@ function average(collection){
 module.exports={
     multiCalculate,
     checkTypeOfWord,
-    pearsonCorrelation,
-    getNewsByRandom
+    pearsonCorrelation
 };

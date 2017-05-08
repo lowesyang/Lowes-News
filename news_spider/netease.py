@@ -4,11 +4,12 @@ from lxml import etree
 from getPage import get_page_decode
 from datetime import datetime
 from wordSegment import wordSegment
+from config import dbUrl
 import pymongo
 import json
 import re
 
-connect=pymongo.MongoClient('mongodb://lowesyang:19951102@115.159.147.165:27017')
+connect=pymongo.MongoClient(dbUrl)
 db=connect.news_collect
 
 url_reg=re.compile(r'(http)|(https)')
@@ -69,6 +70,14 @@ def netease():
         json_str=data[9:-1]
         items=json.loads(json_str)[URL[k]['key']]
         for news in items:
+
+            news['time']=news['ptime']
+            news['intro']=news['digest']
+            news['img']=news['imgsrc']
+            news.pop('digest')
+            news.pop('ptime')
+            news.pop('imgsrc')
+
             news['category']=URL[k]["category"]
             # 获取详情页
             try:
@@ -85,11 +94,12 @@ def netease():
             news['content']=content
             # 新闻特征统计
             news['feature']=wordSegment(content)
+            news['platform']="netease"
             # 查询是否已存在该条新闻
-            save_item=db.netease_news.find_one({'docid':news['docid']})
+            save_item=db.news.find_one({'docid':news['docid']})
             if save_item is None:
                 news['expire']=datetime.utcnow()
-                db.netease_news.insert(news)
+                db.news.insert(news)
         # print("已爬完"+URL[k]['category'])
     print("netease completed!")
 
