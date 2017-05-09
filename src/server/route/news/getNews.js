@@ -1,5 +1,4 @@
 let news=require("../../model").news;
-let getNewsByRandom=require("../../helpers/utils").shuffle;
 let moment=require("moment");
 
 /**
@@ -10,17 +9,16 @@ let moment=require("moment");
  * @return Promise instance
  */
 function getNews(type,page,pcount){
-    let numPerFind=pcount>2000?pcount:2000,
+    let numPerFind=pcount>600?pcount:600,
         realSkip=parseInt(((page-1)*pcount/numPerFind))*numPerFind;
     return new Promise((resolve,reject)=>{
         news.find({category:{$regex:type}}).sort({time:-1}).skip(realSkip).
         limit(numPerFind).exec((err,data)=>{
-            if(err) reject("获取新闻列表失败");
-            data.sort((a,b)=>{
-                return moment(b.time).valueOf()-moment(a.time).valueOf()
-            });
+            if(err) reject(err);
             let begin=(page-1)*pcount%numPerFind;
-            data=data.slice(begin,begin+pcount);
+            data=data.sort((a,b)=>{
+                return moment(b.time).valueOf()-moment(a.time).valueOf()
+            }).slice(begin,begin+pcount);
             data.forEach((item) => {
                 if(!item['img']) {
                     item['img']='/images/noimg'+Math.floor(Math.random()*18+1)+'.jpg';
