@@ -29,7 +29,7 @@ router.get("/list/:type?",(req,res)=>{
     let userInfo=req.user;
     let taste=userInfo.favor.taste || {};
     let resArr=cache.get(req.user._id);
-    let totalPerSrc=300;     // 每个平台抓取的新闻
+    let totalPerSrc=2000;     // 抓取的新闻
     // console.log(resArr)
     if(!resArr) {
         // 用户特征分布集合
