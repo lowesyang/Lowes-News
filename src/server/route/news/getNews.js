@@ -10,7 +10,7 @@ let moment=require("moment");
  * @return Promise instance
  */
 function getNews(type,page,pcount){
-    let numPerFind=2000,
+    let numPerFind=pcount>2000?pcount:2000,
         realSkip=parseInt(((page-1)*pcount/numPerFind))*numPerFind;
     return new Promise((resolve,reject)=>{
         news.find({category:{$regex:type}}).sort({time:-1}).skip(realSkip).
