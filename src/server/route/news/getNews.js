@@ -6,24 +6,21 @@ let getNewsByRandom=require("../../helpers/utils").shuffle;
  * @param type   ["news","tech","sports".....]
  * @param page   page number
  * @param pcount   number of items in per page
- * @param {Boolean} isGetContent 是否包括新闻内容返回
  * @return Promise instance
  */
-function getNews(type,page,pcount,isGetContent){
+function getNews(type,page,pcount){
     return new Promise((resolve,reject)=>{
         news.find({category:{$regex:type}}).sort({time:-1}).skip((page-1)*pcount).
         limit(pcount).exec((err,data)=>{
             if(err) reject("获取新闻列表失败");
             data=getNewsByRandom(data);
-            if(!isGetContent) {
-                data.forEach((item) => {
-                    if(!item['img']) {
-                        item['img']='/images/noimg'+Math.floor(Math.random()*18+1)+'.jpg';
-                    }
-                    //节省数据字节
-                    item.content="";
-                })
-            }
+            data.forEach((item) => {
+                if(!item['img']) {
+                    item['img']='/images/noimg'+Math.floor(Math.random()*18+1)+'.jpg';
+                }
+                //节省数据字节
+                item.content="";
+            });
             resolve(data);
         });
     });
