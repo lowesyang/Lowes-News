@@ -52,9 +52,9 @@ def getGameNews():
                 # 发布时间
                 time=time_reg.search(detail.xpath("//p[@class='prot']/span")[0].text)
                 if time:
-                    news["cdateTime"]=time.group()
+                    news["time"]=time.group()
                 else:
-                    news["cdateTime"]=""
+                    news["time"]=""
                 # 新闻内容
                 content=detail.xpath("//div[@id='j_articleContent']")[0]
                 content=content.xpath("p|div")
