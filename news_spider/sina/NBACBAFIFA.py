@@ -45,6 +45,8 @@ def getNBACBAFIFA():
                 news["content"]=""
                 news["category"]="sports"
                 news["scate"]=cate["scate"]
+                news['time']=news['cdateTime']
+                news.pop('cdateTime')
                 article=detail.xpath("//section[@class='art_pic_card art_content']")
                 if len(article)!=0:   # mobile page
                     news["content"]=etree.tounicode(article[0])
