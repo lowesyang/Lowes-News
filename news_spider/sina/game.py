@@ -46,7 +46,7 @@ def getGameNews():
             news["category"]="game"
             news["scate"]=game["scate"]
             try:
-                detail=etree.HTML(get_page_decode(news["link"]))
+                detail=etree.HTML(get_page_decode(news["url"]))
                 # 新闻标题
                 news["title"]=detail.xpath("//div[@class='articleTitle']/h1")[0].text
                 # 发布时间
