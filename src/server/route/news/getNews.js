@@ -16,8 +16,12 @@ function getNews(type,page,pcount){
         limit(numPerFind).exec((err,data)=>{
             if(err) reject(err);
             let begin=(page-1)*pcount%numPerFind;
+            // 提供效率，先做时间戳转换再排序
+            data.forEach((item)=>{
+                item.tms=moment(item.time).valueOf();
+            })
             data=data.sort((a,b)=>{
-                return moment(b.time).valueOf()-moment(a.time).valueOf()
+                return b.tms-a.tms
             }).slice(begin,begin+pcount);
             data.forEach((item) => {
                 if(!item['img']) {
