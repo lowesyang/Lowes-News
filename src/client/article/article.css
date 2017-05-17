@@ -71,3 +71,32 @@ article{
     margin-top:10px;
     font-style: normal;
 }
+
+/* mobile */
+@media screen and (max-width:450px){
+    .container{
+        width:100%;
+    }
+    .article{
+        width:100%;
+        margin-top:24px;
+    }
+    article{
+        margin-bottom:-35px;
+    }
+    .newsDetail{
+        padding:0 10px 50px 10px;
+    }
+    .article .title{
+        font-size:1.1rem;
+    }
+    .article .infoBox{
+        font-size:0.6rem;
+    }
+    .article .content{
+        font-size:0.8rem;
+    }
+    .article .link{
+        font-size:0.6rem;
+    }
+}

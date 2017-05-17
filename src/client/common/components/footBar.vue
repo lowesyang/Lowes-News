@@ -38,6 +38,19 @@
         font-size:12px;
         margin-top:4px;
     }
+
+    @media screen and (max-width:450px){
+        .footer{
+            height:35px;
+        }
+        .icon-github{
+            font-size:24px;
+            margin:10px;
+        }
+        .power{
+            display:none;
+        }
+    }
 </style>
 
 <script>

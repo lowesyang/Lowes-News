@@ -8,7 +8,7 @@ function cateToName(category){
         case 'game':category='游戏';break;
         case 'phone':category='手机';break;
         case 'army':category='军事';break;
-        default:category='新闻';
+        default:category='头条';
     }
     return category;
 };
