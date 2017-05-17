@@ -6,6 +6,7 @@ import footBar from "../common/components/footBar.vue";
 import {LS} from "../utils";
 import axios from "axios";
 import Promise from "es6-promise";
+import "../serviceWorker";
 
 window.Promise=Promise;
 axios.default.timeout=30*1000;

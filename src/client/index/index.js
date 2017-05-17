@@ -11,6 +11,7 @@ import Toasted from "vue-toasted";
 import vmodal from "vue-js-modal";
 import "../utils/ajaxInit";
 import {cateToName} from "../utils";
+import "../serviceWorker";
 
 Vue.use(VueLazyImages);
 Vue.use(Toasted,{

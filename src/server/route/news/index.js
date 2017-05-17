@@ -20,7 +20,7 @@ router.get("/",(req,res)=>{
 router.get("/news/:type?",(req,res)=>{
     let type=req.params.type || "",
         page=1,
-        pcount=10;
+        pcount=20;
     getNews(type,page,pcount)
         .then((data)=>{
             renderer.renderToString(

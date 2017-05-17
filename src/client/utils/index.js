@@ -44,3 +44,4 @@ export const cateToName=(category)=>{
     }
     return category;
 };
+
