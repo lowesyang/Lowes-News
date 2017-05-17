@@ -78,6 +78,8 @@ router.get("/p/:docId",(req,res)=>{
                     if (err) return res.status(500).send("Server Error");
                     let article = views.articleHtml
                         .replace("<title></title>", `<title>${data.title}</title>`)
+                        .replace("SEOTITLE",data.title)
+                        .replace("SEODESCRIP",data.intro || data.title)
                         .replace("<div id=NEWS></div>", html)
                     res.send(article);
                 }

@@ -28,7 +28,31 @@ function shuffle(arr,count = 0){
     return arr.slice(0,count);
 }
 
+/**
+ * 性能测试，打印时间点
+ * @param descrip
+ */
+const timeLog=(()=>{
+    let time=null;
+    return {
+        begin(){
+            time=Date.now();
+        },
+        log(msg){
+            if(time==null) {
+                return console.error("Please invoke timeLog.begin() first");
+            }
+            console.log(msg,(Date.now()-time)/1000,'s');
+            time=Date.now();
+        },
+        end(){
+            time=null;
+        }
+    }
+})();
+
 module.exports={
     cateToName,
-    shuffle
+    shuffle,
+    timeLog
 }
