@@ -15,17 +15,17 @@ function initSW(){
 /**
  * 初始化推送系统
  */
-if(window.Notification && Notification.permission!=='granted'){
-    Notification.requestPermission((status)=>{
-        if(status==='granted') {
-            Notification.permission = status;
-        }
-    })
+if(window.Notification){
+    if(Notification.permission!=='granted') {
+        Notification.requestPermission((status) => {
+            if (status === 'granted') {
+                Notification.permission = status;
+            }
+        })
+    }
+    if(Notification.permission === 'granted'){
+        initSW();
+    }
 }
-
-if(window.Notification && Notification.permission === 'granted'){
-    initSW();
-}
-
 
 
