@@ -70,7 +70,7 @@
                 let scrollTop=document.documentElement.scrollTop || document.body.scrollTop;
                 let scrollH=document.documentElement.scrollHeight || document.body.scrollHeight;
                 let clientH=document.documentElement.clientHeight||document.body.clientHeight;
-                if(scrollTop + clientH + 20 > scrollH) return true;
+                if(scrollTop + clientH + 60 > scrollH) return true;
                 else return false;
             },
             getNoImgId(){
