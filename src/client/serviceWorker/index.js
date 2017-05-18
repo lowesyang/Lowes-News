@@ -23,7 +23,7 @@ if(window.Notification && Notification.permission!=='granted'){
     })
 }
 
-if(Notification.permission === 'granted'){
+if(window.Notification && Notification.permission === 'granted'){
     initSW();
 }
 
