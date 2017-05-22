@@ -1,21 +1,29 @@
 self.addEventListener('install',event=>{
     console.log('Service-worker installed successfully');
-    setInterval(()=>{
-        fetch('/extra/news?p=1&pcount=10').then((response)=>{
-            return response.json();
-        }).then((res)=>{
-            if(!res.code){
-                let news=res.body.news[Math.floor(Math.random()*10)];
-                // show notification
-                self.registration.showNotification(news.title,{
-                    body:news.intro || news.title,
-                    icon:news.img,
-                    tag:news._id,
-                    renotify:true
-                })
-            }
-        })
-    },3600000);
+});
+
+self.addEventListener('activate',event=>{
+    console.log('activate')
+});
+
+self.addEventListener('push',event=>{
+    console.log('Push received!');
+    fetch('/extra/news?p=1&pcount=10').then((response)=>{
+        return response.json();
+    }).then((res)=>{
+        if(!res.code){
+            let news=res.body.news[Math.floor(Math.random()*10)];
+            // show notification
+            self.registration.showNotification(news.title,{
+                body:news.intro || news.title,
+                icon:news.img,
+                tag:news._id,
+                renotify:true
+            })
+        }
+    }).catch((e)=>{
+        console.log(e.toString());
+    })
 });
 
 // notification click event
