@@ -29,9 +29,10 @@ function getNews(type,page,pcount){
             }).slice(begin,begin+pcount);
             // timeLog.log('News sorted:');
             data.forEach((item) => {
-                if(!item['img']) {
-                    item['img']='/images/noimg'+Math.floor(Math.random()*18+1)+'.jpg';
+                if(!item.img) {
+                    item.img='/images/noimg'+Math.floor(Math.random()*18+1)+'.jpg';
                 }
+                item.img=item.img.replace('http:','https:');
                 //节省数据字节
                 item.content="";
             });
