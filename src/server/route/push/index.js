@@ -36,9 +36,7 @@ router.post('/subscribe',(req,res)=>{
 
 router.post('/unsubscribe',(req,res)=>{
     let ip=req.connection.remoteAddress;
-    if(ip in clients){
-        clients[ip]=null;
-    }
+    clients[ip]=null;
     res.json({
         code:0
     })
@@ -47,10 +45,13 @@ router.post('/unsubscribe',(req,res)=>{
 setInterval(()=>{
     for(let key in clients) {
         if(!clients[key]) continue;
-        webpush.sendNotification(clients[key]).catch(e => {
+        console.log(clients[key].endpoint);
+        webpush.sendNotification(clients[key]).then(()=>{
+            console.log("Notify successfully!");
+        }).catch(e => {
             console.log(e.toString());
         })
     }
-},20000);
+},3600*1000);
 
 module.exports=router;

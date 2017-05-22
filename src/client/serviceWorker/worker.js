@@ -14,7 +14,7 @@ self.addEventListener('push',event=>{
         if(!res.code){
             let news=res.body.news[Math.floor(Math.random()*10)];
             // show notification
-            self.registration.showNotification(news.title,{
+            return self.registration.showNotification(news.title,{
                 body:news.intro || news.title,
                 icon:news.img,
                 tag:news._id,
