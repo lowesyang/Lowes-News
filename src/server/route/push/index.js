@@ -1,5 +1,5 @@
 let router=require('express').Router();
-const webpush=require('web-push');
+const webpush=require('web-push-china');
 const vapidKeys=webpush.generateVAPIDKeys();
 const clients={};
 
@@ -42,11 +42,19 @@ router.post('/unsubscribe',(req,res)=>{
     })
 });
 
+const options={
+    proxyUrl:'127.0.0.1',
+    proxyPort:1080,
+    headers:{
+        Host:'fcm.googleapis.com'
+    }
+}
+
 setInterval(()=>{
     for(let key in clients) {
         if(!clients[key]) continue;
         console.log(clients[key].endpoint);
-        webpush.sendNotification(clients[key]).then(()=>{
+        webpush.sendNotification(clients[key],'',options).then(()=>{
             console.log("Notify successfully!");
         }).catch(e => {
             console.log(e.toString());
