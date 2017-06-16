@@ -60,6 +60,6 @@ setInterval(()=>{
             console.log(e.toString());
         })
     }
-},3600*1000);
+},10000);
 
 module.exports=router;
