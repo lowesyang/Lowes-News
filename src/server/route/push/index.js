@@ -2,6 +2,7 @@ let router=require('express').Router();
 const webpush=require('web-push-china');
 const vapidKeys=webpush.generateVAPIDKeys();
 const clients={};
+const proxyPort=process.env.NODE_ENV === "dev"?1080:8118;
 
 webpush.setGCMAPIKey('AIzaSyAbr5V-JmZ8tMShtT_KNtWcn6f8oOEqAUo');
 webpush.setVapidDetails(
@@ -44,22 +45,48 @@ router.post('/unsubscribe',(req,res)=>{
 
 const options={
     proxyUrl:'127.0.0.1',
-    proxyPort:8118,
+    proxyPort:proxyPort,
     headers:{
         Host:'fcm.googleapis.com'
     }
 }
 
-setInterval(()=>{
-    for(let key in clients) {
-        if(!clients[key]) continue;
-        console.log(clients[key].endpoint);
-        webpush.sendNotification(clients[key],'',options).then(()=>{
-            console.log("Notify successfully!");
-        }).catch(e => {
-            console.log(e);
+let lastPush=0;
+// 触发推送
+router.get('/trigger',(req,res)=>{
+    let now=Date.now();
+    let during=(now-lastPush)/1000;
+    if(during<=600){
+        return res.json({
+            code:1,
+            msg:Math.round((600-during)/60)+'分钟之后才能再次推送'
         })
     }
-},3600*1000);
+    new Promise((resolve,reject)=>{
+        for(let key in clients) {
+            if(!clients[key]) continue;
+            console.log(clients[key].endpoint);
+            webpush.sendNotification(clients[key],'',options).then(()=>{
+                console.log("Notify successfully!");
+                lastPush=now;
+                resolve();
+            }).catch(e => {
+                console.log(e);
+                reject(e);
+            })
+        }
+    }).then(()=>{
+        res.json({
+            code:0,
+            msg:'推送成功'
+        })
+    }).catch((e)=>{
+        res.json({
+            code:1,
+            msg:e.toString()
+        })
+    })
+})
+
 
 module.exports=router;

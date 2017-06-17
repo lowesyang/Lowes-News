@@ -94,7 +94,10 @@ if(window.Notification){
     if(Notification.permission!=='granted') {
         Notification.requestPermission((status) => {
             if (status === 'granted') {
-                Notification.permission = status;
+                new Notification('感谢订阅Lowes-News',{
+                    body:'热点要闻及时为您推送',
+                    icon:'/images/thanks.jpg'
+                });
             }
         })
     }
