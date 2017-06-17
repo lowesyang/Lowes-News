@@ -44,7 +44,7 @@ router.post('/unsubscribe',(req,res)=>{
 
 const options={
     proxyUrl:'127.0.0.1',
-    proxyPort:1080,
+    proxyPort:8118,
     headers:{
         Host:'fcm.googleapis.com'
     }
@@ -57,9 +57,9 @@ setInterval(()=>{
         webpush.sendNotification(clients[key],'',options).then(()=>{
             console.log("Notify successfully!");
         }).catch(e => {
-            console.log(e.toString());
+            console.log(e);
         })
     }
-},10000);
+},3600*1000);
 
 module.exports=router;
