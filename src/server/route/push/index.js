@@ -62,10 +62,11 @@ router.get('/trigger',(req,res)=>{
             msg:Math.round((600-during)/60)+'分钟之后才能再次推送'
         })
     }
-    new Promise((resolve,reject)=>{
-        for(let key in clients) {
-            if(!clients[key]) continue;
-            console.log(clients[key].endpoint);
+    let p=[];
+    for(let key in clients) {
+        if(!clients[key]) continue;
+        console.log(clients[key].endpoint);
+        p.push(new Promise((resolve,reject)=>{
             webpush.sendNotification(clients[key],'',options).then(()=>{
                 console.log("Notify successfully!");
                 lastPush=now;
@@ -74,8 +75,9 @@ router.get('/trigger',(req,res)=>{
                 console.log(e);
                 reject(e);
             })
-        }
-    }).then(()=>{
+        }))
+    }
+    Promise.all(p).then(()=>{
         res.json({
             code:0,
             msg:'推送成功'
