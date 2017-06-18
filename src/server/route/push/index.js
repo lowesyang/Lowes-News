@@ -90,5 +90,18 @@ router.get('/trigger',(req,res)=>{
     })
 })
 
+// 定时推送
+setInterval(()=>{
+    for(let key in clients) {
+        if(!clients[key]) continue;
+        console.log(clients[key].endpoint);
+        webpush.sendNotification(clients[key],'',options).then(()=>{
+            console.log("Notify successfully!");
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+},3600*1000);
+
 
 module.exports=router;
