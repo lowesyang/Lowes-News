@@ -17,7 +17,8 @@ News collecting and recommendation website
 
 ## Installation
 ```
-npm clone
+git clone https://github.com/yyh1102/Lowes-News.git
+npm install
 npm start
 open http://localhost:3000
 ```
