@@ -44,7 +44,7 @@ module.exports=merge.smart({},webpackBasicConfig,{
     },
     plugins:[
         new webpack.optimize.CommonsChunkPlugin({
-            name:'vendor',
+            name:['vendor','runtime'],
             filename:'[name].[chunkhash:7].js'
         }),
         new webpack.optimize.UglifyJsPlugin({
@@ -64,7 +64,7 @@ module.exports=merge.smart({},webpackBasicConfig,{
             filename: 'index.html',
             template: path.resolve(__dirname,'..','src/client/index/index.html'),
             inject: true,
-            chunks:['vendor','index'],
+            chunks:['runtime','vendor','index'],
             minify:{
                 removeComments: true,        //去注释
                 collapseWhitespace: true,    //压缩空格
@@ -75,13 +75,14 @@ module.exports=merge.smart({},webpackBasicConfig,{
             filename:'article.html',
             template:path.resolve(__dirname,'..','src/client/article/article.html'),
             inject:true,
-            chunks:['vendor','article'],
+            chunks:['runtime','vendor','article'],
             minify:{
                 removeComments: true,        //去注释
                 collapseWhitespace: true,    //压缩空格
                 removeAttributeQuotes: true  //去除属性引用
             }
         }),
-        new ExtractTextPlugin('[name].[contenthash:7].css')
+        new ExtractTextPlugin('[name].[contenthash:7].css'),
+        new webpack.HashedModuleIdsPlugin()
     ]
 });

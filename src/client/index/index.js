@@ -19,7 +19,6 @@ Vue.use(Toasted,{
     duration:3000
 });
 Vue.use(vmodal);
-
 new Vue({
     data(){
         return {
